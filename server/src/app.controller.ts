@@ -1,4 +1,4 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Inject, Param } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 export class AppController {
   constructor(@Inject('FILM_SERVICE') private readonly client: ClientProxy) {}
 
-  @Get('')
-  getHello(): Observable<string> {
-    return this.client.send('sayhello', '');
+  @Get('film/:id')
+  getFilm(@Param('id') id: number): Observable<string> {
+    return this.client.send('get_film', id);
   }
 }
