@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "film-service",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -22,7 +22,6 @@
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
-    "@nestjs/jwt": "^10.0.3",
     "@nestjs/microservices": "^9.4.0",
     "@nestjs/platform-express": "^9.0.0",
     "amqp-connection-manager": "^4.1.12",
