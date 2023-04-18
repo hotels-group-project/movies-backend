@@ -5,12 +5,14 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { Film } from './film.model';
 import { Genre } from 'src/genre/genre.model';
 import { FilmGenres } from 'src/genre/film-genre-model';
+import { Country } from 'src/country/country.model';
+import { FilmCountries } from 'src/country/film-country.model';
 
 @Module({
   providers: [FilmService],
   controllers: [FilmController],
   imports : [    
-    SequelizeModule.forFeature([Film, Genre, FilmGenres]),     
+    SequelizeModule.forFeature([Film, Genre, FilmGenres, Country, FilmCountries]),     
   ]
 })
 export class FilmModule {}

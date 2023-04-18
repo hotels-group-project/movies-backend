@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Param } from '@nestjs/common';
+import { Controller, Get, Inject, Param, Query } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { IServiceFilmByIdResponse } from './interfaces/film/film_get_by_id.response.interface';
@@ -7,9 +7,14 @@ import { IServiceFilmByIdResponse } from './interfaces/film/film_get_by_id.respo
 export class FilmController {
   constructor(@Inject('FILM_SERVICE') private readonly client: ClientProxy) {}
 
-  @Get('/:genre')
-  getFilmById(@Param('genre') genre: string): Observable<IServiceFilmByIdResponse> {
-    return this.client.send('get_films_by_genre', genre);
+  @Get('/search?')
+  getFilmBySearchParams(
+    @Query('genre') genre: string,
+    @Query('year') year: number,
+    @Query('country') country : string
+  ): Observable<IServiceFilmByIdResponse> {    
+    let searchParams = {genre : genre, year : year, country : country }
+    return this.client.send('get_films_by_params', searchParams);
   }
 
   @Get()

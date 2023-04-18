@@ -10,5 +10,10 @@ export class FilmController {
   @MessagePattern('get_films')
   getAllFilms() : Promise<Film[]> {
     return this.filmService.getAllFilms();
+  }  
+
+  @MessagePattern('get_films_by_params')
+  getFilmsByParams(searchParams){
+    return this.filmService.getFilmsByParams(searchParams);
   }
 }
