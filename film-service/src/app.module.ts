@@ -9,7 +9,8 @@ import { FilmModule } from './film/film.module';
 import { FilmGenres } from './genre/film-genre-model';
 import { Genre } from './genre/genre.model';
 import { GenreModule } from './genre/genre.module';
-import { MinerModule } from './miner/miner.module';
+import { TransferModule } from './datatransder/transfer.module';
+import { CountryModule } from './country/country.module';
 
 @Module({
   imports: [  
@@ -29,7 +30,8 @@ import { MinerModule } from './miner/miner.module';
     HttpModule,
     FilmModule,
     GenreModule,
-    MinerModule
+    TransferModule,
+    CountryModule
   ],
   controllers: [],
   providers: [],

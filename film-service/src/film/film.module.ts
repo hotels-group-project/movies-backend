@@ -13,6 +13,9 @@ import { FilmCountries } from 'src/country/film-country.model';
   controllers: [FilmController],
   imports : [    
     SequelizeModule.forFeature([Film, Genre, FilmGenres, Country, FilmCountries]),     
+  ],
+  exports : [
+    FilmService
   ]
 })
 export class FilmModule {}
