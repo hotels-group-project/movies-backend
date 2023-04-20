@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Film } from '../film/film.model';
 import { Genre } from './genre.model';
 
 @Injectable()

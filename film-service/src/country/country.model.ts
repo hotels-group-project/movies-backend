@@ -1,10 +1,7 @@
 import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
 import { Film } from "../film/film.model";
+import { CountryCreationAttr } from "./dto/country.types";
 import { FilmCountries } from "./film-country.model";
-
-interface CountryCreationAttr{
-    name : string;    
-}
 
 @Table({tableName : 'countries', createdAt : false, updatedAt : false})
 export class Country extends Model<Country, CountryCreationAttr>{

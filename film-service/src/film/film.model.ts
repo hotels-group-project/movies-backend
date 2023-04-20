@@ -3,20 +3,7 @@ import { Country } from "src/country/country.model";
 import { FilmCountries } from "src/country/film-country.model";
 import { FilmGenres } from "src/genre/film-genre-model";
 import { Genre } from "src/genre/genre.model";
-
-interface FilmCreationAttr{
-    name : string;
-    alternativeName: string;    
-    year : number;    
-    description : string;
-    shortDescription: string;
-    slogan: string;
-    kprating: number;
-    kpvotes: number;  
-    movieLength: number;  
-    trailer: string;  
-    ageRating: number;
-}
+import { FilmCreationAttr } from "./dto/film-creation-dto";
 
 @Table({tableName : 'films', createdAt : false, updatedAt : false})
 export class Film extends Model<Film, FilmCreationAttr>{

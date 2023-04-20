@@ -29,8 +29,7 @@ export class TransferService {
         });  
 
         let filmsToProceed = data.length;        
-        for (let i = 0; i < filmsToProceed; i++){
-            console.log(i);
+        for (let i = 0; i < filmsToProceed; i++){            
             try {
                 let parsedData = await JSON.parse(data[i]); 
                 if (parsedData.name){
@@ -116,5 +115,4 @@ export class TransferService {
             await this.filmCountriesRepository.create({film_id : film_id, country_id : country.country_id});
         });   
     }
-
 }
