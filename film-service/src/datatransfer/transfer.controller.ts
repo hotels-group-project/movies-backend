@@ -7,8 +7,8 @@ export class TransferController {
 
     constructor(private readonly minerService: TransferService) {}
 
-    @MessagePattern('mine_films')
-    mineFilms(){
-    return this.minerService.moveFilmsIntoDb();
+    @MessagePattern('transfer_data_to_db')
+    transferData(){
+        return this.minerService.moveFilmsIntoDb();
   }
 }

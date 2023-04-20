@@ -18,7 +18,7 @@ export class FilmService {
 
     async getAllFilms() : Promise<GetFilmDto[]> {
         const foundMovies = await this.filmRepository.findAll({include : {all : true}});
-        let result = this.formAnswer(foundMovies);
+        let result = this.transformDataForResponse(foundMovies);
 
         return result;
     }
@@ -37,7 +37,7 @@ export class FilmService {
         }
 
         const foundMovies = await this.filmRepository.findAll(searchOptions);
-        let result = this.formAnswer(foundMovies);
+        let result = this.transformDataForResponse(foundMovies);
 
         return result;
     }
@@ -74,7 +74,7 @@ export class FilmService {
         return { model: Country }
     }
 
-    formAnswer(movies) : GetFilmDto[] {
+    transformDataForResponse(movies) : GetFilmDto[] {
         let result : GetFilmDto[] = [];
         for (let i = 0; i < movies.length; i++){
             result.push( this.transformDataForSingleMovie(movies[i]) );
