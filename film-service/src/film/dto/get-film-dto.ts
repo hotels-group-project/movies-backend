@@ -10,6 +10,7 @@ export class GetFilmDto{
     kpvotes: number
     movieLength: number
     ageRating: number
+    trailer: string
     genres: string[]
     countries: string[]
 }

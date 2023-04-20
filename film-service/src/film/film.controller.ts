@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { Film } from './film.model';
+import { GetFilmDto } from './dto/get-film-dto';
 import { FilmService } from './film.service';
 
 @Controller()
@@ -8,7 +8,7 @@ export class FilmController {
   constructor(private readonly filmService: FilmService) {}
 
   @MessagePattern('get_films')
-  getAllFilms() : Promise<Film[]> {
+  getAllFilms() : Promise<GetFilmDto[]> {
     return this.filmService.getAllFilms();
   }  
 

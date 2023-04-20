@@ -9,7 +9,7 @@ import { FilmModule } from './film/film.module';
 import { FilmGenres } from './genre/film-genre-model';
 import { Genre } from './genre/genre.model';
 import { GenreModule } from './genre/genre.module';
-import { TransferModule } from './datatransder/transfer.module';
+import { TransferModule } from './datatransfer/transfer.module';
 import { CountryModule } from './country/country.module';
 
 @Module({

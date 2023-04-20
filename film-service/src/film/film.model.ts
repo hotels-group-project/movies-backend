@@ -13,7 +13,8 @@ interface FilmCreationAttr{
     slogan: string;
     kprating: number;
     kpvotes: number;  
-    movieLength: number;    
+    movieLength: number;  
+    trailer: string;  
     ageRating: number;
 }
 
@@ -40,6 +41,9 @@ export class Film extends Model<Film, FilmCreationAttr>{
 
     @Column({type : DataType.TEXT})
     slogan: string
+
+    @Column({type : DataType.TEXT})
+    trailer : string
 
     @Column({type : DataType.REAL})
     kprating: number

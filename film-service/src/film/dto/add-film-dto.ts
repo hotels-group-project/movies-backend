@@ -9,4 +9,5 @@ export class AddFilmDto{
     kpvotes: number
     movieLength: number
     ageRating: number
+    trailer: string
 }
