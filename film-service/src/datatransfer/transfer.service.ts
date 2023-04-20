@@ -28,8 +28,7 @@ export class TransferService {
             data.push(fs.readFileSync(`${dataStorage}\\${file}`, 'utf-8'));
         });  
 
-        let filmsToProceed = data.length;
-        filmsToProceed = 10;
+        let filmsToProceed = data.length;        
         for (let i = 0; i < filmsToProceed; i++){
             console.log(i);
             try {

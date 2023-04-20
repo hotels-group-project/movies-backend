@@ -7,11 +7,6 @@ import { Genre } from './genre.model';
 export class GenreService {
 
     constructor(@InjectModel(Genre) private genreRepository : typeof Genre){}
-    
-    // async getFilmsByGenre(genre : string) : Promise<any>{
-    //     let result = await this.genreRepository.findOne({where : {name : genre}, include : {all : true}})     
-    //     return result.films;
-    // }
 
     async addGenre(name : string){
         return await this.genreRepository.create({name : name});
