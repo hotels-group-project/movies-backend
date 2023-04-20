@@ -18,7 +18,7 @@ export class FilmService {
 
     async getAllFilms() : Promise<GetFilmDto[]> {
         const foundMovies = await this.filmRepository.findAll({include : {all : true}});
-        let result = this.transformDataForResponse(foundMovies);
+        const result = this.transformDataForResponse(foundMovies);
 
         return result;
     }
@@ -37,7 +37,7 @@ export class FilmService {
         }
 
         const foundMovies = await this.filmRepository.findAll(searchOptions);
-        let result = this.transformDataForResponse(foundMovies);
+        const result = this.transformDataForResponse(foundMovies);
 
         return result;
     }

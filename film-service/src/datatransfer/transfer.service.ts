@@ -20,7 +20,7 @@ export class TransferService {
                 @InjectModel(FilmCountries) private filmCountriesRepository : typeof FilmCountries){}
 
     async moveFilmsIntoDb(){       
-        let dataStorage = path.resolve(__dirname, '..', '..', '..', 'data');       
+        const dataStorage = path.resolve(__dirname, '..', '..', '..', 'data');       
         const files = fs.readdirSync(dataStorage);
         let data = [];
 
@@ -28,7 +28,7 @@ export class TransferService {
             data.push(fs.readFileSync(`${dataStorage}\\${file}`, 'utf-8'));
         });  
 
-        let filmsToProceed = data.length;        
+        const filmsToProceed = data.length;        
         for (let i = 0; i < filmsToProceed; i++){            
             try {
                 let parsedData = await JSON.parse(data[i]); 
@@ -46,8 +46,8 @@ export class TransferService {
             return;
         }    
 
-        let addFilmDto : AddFilmDto = this.mapParsedDataToAddFilmDto(parsedData);    
-        let film : Film = await this.filmService.addFilm(addFilmDto);
+        const addFilmDto : AddFilmDto = this.mapParsedDataToAddFilmDto(parsedData);    
+        const film : Film = await this.filmService.addFilm(addFilmDto);
         await this.addGenres(parsedData, film.film_id);
         await this.addCountries(parsedData, film.film_id);
     }
@@ -69,11 +69,11 @@ export class TransferService {
     }
 
     mapParsedDataToAddFilmDto(parsedData) : AddFilmDto{
-        let ratingkp = this.getRatingKp(parsedData.rating);
-        let voteskp = this.getVotesKp(parsedData.votes);
-        let trailer = this.getTrailer(parsedData.videos);     
+        const ratingkp = this.getRatingKp(parsedData.rating);
+        const voteskp = this.getVotesKp(parsedData.votes);
+        const trailer = this.getTrailer(parsedData.videos);     
 
-        let addFilmDto : AddFilmDto = {
+        const addFilmDto : AddFilmDto = {
             name : parsedData.name,
             alternativeName : parsedData.alternativeName,
             year : parsedData.year,
@@ -91,7 +91,7 @@ export class TransferService {
     }
 
     async addGenres(parsedData, film_id){
-        let genres = parsedData.genres;
+        const genres = parsedData.genres;
   
         genres.forEach(async (element) => {
             let genre = await this.genreService.getGenreByName(element.name);
@@ -104,7 +104,7 @@ export class TransferService {
     }
 
     async addCountries(parsedData, film_id){
-        let countries = parsedData.countries;
+        const countries = parsedData.countries;
   
         countries.forEach(async (element) => {
             let country = await this.countryService.getCountryByName(element.name);
