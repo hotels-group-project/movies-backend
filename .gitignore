@@ -2,7 +2,7 @@
 /dist
 /node_modules
 /data
-/data-miner
+/data_miner
 
 # Logs
 logs
