@@ -13,7 +13,12 @@ export class FilmController {
   }  
 
   @MessagePattern('get_films_by_params')
-  getFilmsByParams(searchParams){
+  getFilmsByParams(searchParams: string){
     return this.filmService.getFilmsByParams(searchParams);
+  }
+
+  @MessagePattern('get_film_by_id')
+  getFilmsById(id: number){
+    return this.filmService.getFilmById(id);
   }
 }

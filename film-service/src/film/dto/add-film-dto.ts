@@ -10,4 +10,5 @@ export class AddFilmDto{
     movieLength: number
     ageRating: number
     trailer: string
+    poster: string
 }

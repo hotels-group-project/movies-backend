@@ -21,4 +21,9 @@ export class FilmController {
   getAllFilms(): Observable<IServiceFilmByIdResponse[]> {
     return this.client.send('get_films', '');
   }
+
+  @Get('/:id')
+  getFilmById(@Param('id') id: number): Observable<IServiceFilmByIdResponse> {    
+    return this.client.send('get_film_by_id', id);
+  }
 }

@@ -11,6 +11,9 @@ import { Genre } from './genre/genre.model';
 import { GenreModule } from './genre/genre.module';
 import { TransferModule } from './datatransfer/transfer.module';
 import { CountryModule } from './country/country.module';
+import { PersonModule } from './person/person.module';
+import { Person } from './person/person.model';
+import { FilmPersons } from './person/film-actor.model';
 
 @Module({
   imports: [  
@@ -24,14 +27,15 @@ import { CountryModule } from './country/country.module';
     username: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
-    models: [Film, Genre, FilmGenres, Country, FilmCountries],
+    models: [Film, Genre, FilmGenres, Country, FilmCountries, Person, FilmPersons],
     autoLoadModels: true
   }),
     HttpModule,
     FilmModule,
     GenreModule,
     TransferModule,
-    CountryModule
+    CountryModule,
+    PersonModule
   ],
   controllers: [],
   providers: [],

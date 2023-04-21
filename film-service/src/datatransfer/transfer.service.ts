@@ -9,6 +9,8 @@ import { FilmGenres } from 'src/genre/film-genre-model';
 import { Film } from 'src/film/film.model';
 import { CountryService } from 'src/country/country.service';
 import { FilmCountries } from 'src/country/film-country.model';
+import { PersonService } from 'src/person/person.service';
+import { FilmPersons } from 'src/person/film-actor.model';
 
 @Injectable()
 export class TransferService {
@@ -16,19 +18,21 @@ export class TransferService {
     constructor (private filmService : FilmService,
                 private genreService : GenreService,
                 private countryService : CountryService,
+                private personService : PersonService,
                 @InjectModel(FilmGenres) private filmGenresRepository : typeof FilmGenres,
-                @InjectModel(FilmCountries) private filmCountriesRepository : typeof FilmCountries){}
+                @InjectModel(FilmCountries) private filmCountriesRepository : typeof FilmCountries,
+                @InjectModel(FilmPersons) private filmPersonsRepository : typeof FilmPersons,){}
 
     async moveFilmsIntoDb(){       
         const dataStorage = path.resolve(__dirname, '..', '..', '..', 'data');       
         const files = fs.readdirSync(dataStorage);
-        let data = [];
+        const data = [];
 
         files.forEach(file => {
             data.push(fs.readFileSync(`${dataStorage}\\${file}`, 'utf-8'));
         });  
 
-        const filmsToProceed = data.length;        
+        const filmsToProceed = data.length;           
         for (let i = 0; i < filmsToProceed; i++){            
             try {
                 let parsedData = await JSON.parse(data[i]); 
@@ -50,44 +54,20 @@ export class TransferService {
         const film : Film = await this.filmService.addFilm(addFilmDto);
         await this.addGenres(parsedData, film.film_id);
         await this.addCountries(parsedData, film.film_id);
+        await this.addPersons(parsedData, film.film_id);
     }
 
-    getRatingKp(rating){
-        return rating ? rating.kp : null;
-    }
+    async addPersons(parsedData, film_id){
+        const staff = parsedData.persons;        
+  
+        for (let i = 0; i < staff.length; i++){
+            let person = await this.personService.getPersonByName(staff[i].name);
+            if (!person) {
+                person = await this.personService.addPerson(staff[i]);
+            }  
 
-    getVotesKp(votes){
-       return votes ? votes.kp : null;
-    }
-
-    getTrailer(videos){
-        if (videos && videos.trailers && videos.trailers.length > 0){
-            return videos.trailers[0].url;
+            await this.filmPersonsRepository.create({film_id : film_id, person_id : person.person_id});
         }
-
-        return null;
-    }
-
-    mapParsedDataToAddFilmDto(parsedData) : AddFilmDto{
-        const ratingkp = this.getRatingKp(parsedData.rating);
-        const voteskp = this.getVotesKp(parsedData.votes);
-        const trailer = this.getTrailer(parsedData.videos);     
-
-        const addFilmDto : AddFilmDto = {
-            name : parsedData.name,
-            alternativeName : parsedData.alternativeName,
-            year : parsedData.year,
-            ageRating : parsedData.ageRating,        
-            description: parsedData.description,
-            shortDescription: parsedData.shortDescription,
-            slogan: parsedData.slogan,
-            kprating: ratingkp,
-            kpvotes: voteskp,
-            movieLength: parsedData.movieLength,     
-            trailer: trailer
-        }
-
-        return addFilmDto;
     }
 
     async addGenres(parsedData, film_id){
@@ -114,5 +94,49 @@ export class TransferService {
 
             await this.filmCountriesRepository.create({film_id : film_id, country_id : country.country_id});
         });   
+    }
+
+    private mapParsedDataToAddFilmDto(parsedData) : AddFilmDto{
+        const ratingkp = this.getRatingKp(parsedData.rating);
+        const voteskp = this.getVotesKp(parsedData.votes);
+        const trailer = this.getTrailer(parsedData.videos);    
+        const poster = this.getPoster(parsedData.poster); 
+
+        const addFilmDto : AddFilmDto = {
+            name : parsedData.name,
+            alternativeName : parsedData.alternativeName,
+            year : parsedData.year,
+            ageRating : parsedData.ageRating,        
+            description: parsedData.description,
+            shortDescription: parsedData.shortDescription,
+            slogan: parsedData.slogan,
+            kprating: ratingkp,
+            kpvotes: voteskp,
+            movieLength: parsedData.movieLength,     
+            trailer: trailer,
+            poster: poster
+        }
+
+        return addFilmDto;
+    }
+
+    private getPoster(poster){
+        return poster ? poster.url : null;
+    }
+
+    private getRatingKp(rating){
+        return rating ? rating.kp : null;
+    }
+
+    private getVotesKp(votes){
+       return votes ? votes.kp : null;
+    }
+
+    private getTrailer(videos){
+        if (videos && videos.trailers && videos.trailers.length > 0){
+            return videos.trailers[0].url;
+        }
+
+        return null;
     }
 }

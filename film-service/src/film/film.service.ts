@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
 import { Country } from 'src/country/country.model';
 import { Genre } from 'src/genre/genre.model';
+import { Person } from 'src/person/person.model';
+import { PersonService } from 'src/person/person.service';
 import { AddFilmDto } from './dto/add-film-dto';
 import { GetFilmDto } from './dto/get-film-dto';
 import { Film } from './film.model';
@@ -10,14 +12,17 @@ import { Film } from './film.model';
 @Injectable()
 export class FilmService {
 
-    constructor(@InjectModel(Film) private filmRepository : typeof Film){}
+    constructor(@InjectModel(Film) private filmRepository : typeof Film,
+                private personService : PersonService){}
+
+    filmsLimitInSearch = 20;
 
     async addFilm(addFilmDto : AddFilmDto) : Promise<Film> {        
         return await this.filmRepository.create(addFilmDto);
     }
 
-    async getAllFilms() : Promise<GetFilmDto[]> {
-        const foundMovies = await this.filmRepository.findAll({include : {all : true}});
+    async getAllFilms() : Promise<GetFilmDto[]> {        
+        const foundMovies = await this.filmRepository.findAll({include : {all : true}, limit: this.filmsLimitInSearch});        
         const result = this.transformDataForResponse(foundMovies);
 
         return result;
@@ -26,9 +31,16 @@ export class FilmService {
     async getFilmByName(name : string) : Promise<Film> {
         return await this.filmRepository.findOne({where : {name : name}});
     }
+
+    async getFilmById(id : number) : Promise<GetFilmDto> {
+        const foundMovie = await this.filmRepository.findOne({where:{film_id : id}, include : {all : true}})
+        const result = this.transformDataForSingleMovie(foundMovie);        
+
+        return result;
+    }
   
-    async getFilmsByParams(searchParams) : Promise<GetFilmDto[]> {
-        let searchOptions = {include : [], where: []};   
+    async getFilmsByParams(searchParams) : Promise<GetFilmDto[]> {        
+        const searchOptions = {include : [{model : Person}], where: [], limit : this.filmsLimitInSearch};
         searchOptions.include.push(this.processGenreOptions(searchParams.genre));
         searchOptions.include.push(this.processCountryOptions(searchParams.country));
 
@@ -75,7 +87,7 @@ export class FilmService {
     }
 
     transformDataForResponse(movies) : GetFilmDto[] {
-        let result : GetFilmDto[] = [];
+        const result : GetFilmDto[] = [];
         for (let i = 0; i < movies.length; i++){
             result.push( this.transformDataForSingleMovie(movies[i]) );
         }
@@ -84,7 +96,7 @@ export class FilmService {
     }
 
     transformDataForSingleMovie(data : Film) : GetFilmDto {
-        let getFilmDto : GetFilmDto = {
+        const getFilmDto : GetFilmDto = {
             film_id: data.film_id ,
             name: data.name,
             alternativeName: data.alternativeName,
@@ -97,8 +109,10 @@ export class FilmService {
             movieLength: data.movieLength,
             ageRating: data.ageRating,
             trailer: data.trailer,
+            poster: data.poster,
             genres: [],
-            countries: []
+            countries: [],
+            staff: []
         }  
 
         data.genres.forEach(genre => {
@@ -108,6 +122,10 @@ export class FilmService {
         data.countries.forEach(country => {
             getFilmDto.countries.push(country.name);
         });
+
+        data.staff.forEach(person => {
+            getFilmDto.staff.push(this.personService.transformToGetPersonDto(person));
+        });        
 
         return getFilmDto;
     }

@@ -3,6 +3,8 @@ import { Country } from "src/country/country.model";
 import { FilmCountries } from "src/country/film-country.model";
 import { FilmGenres } from "src/genre/film-genre-model";
 import { Genre } from "src/genre/genre.model";
+import { FilmPersons } from "src/person/film-actor.model";
+import { Person } from "src/person/person.model";
 import { FilmCreationAttr } from "./dto/film-creation-dto";
 
 @Table({tableName : 'films', createdAt : false, updatedAt : false})
@@ -32,6 +34,9 @@ export class Film extends Model<Film, FilmCreationAttr>{
     @Column({type : DataType.TEXT})
     trailer : string
 
+    @Column({type : DataType.TEXT})
+    poster : string
+
     @Column({type : DataType.REAL})
     kprating: number
 
@@ -49,4 +54,8 @@ export class Film extends Model<Film, FilmCreationAttr>{
  
     @BelongsToMany(() => Genre, () => FilmGenres)
     genres: Genre[];
+
+    @BelongsToMany(() => Person, () => FilmPersons)
+    staff: Person[];
+
 }

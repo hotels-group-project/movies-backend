@@ -1,3 +1,5 @@
+import { GetPersonDto } from "src/person/dto/get-person-dto"
+
 export class GetFilmDto{   
     film_id: number 
     name: string
@@ -11,6 +13,8 @@ export class GetFilmDto{
     movieLength: number
     ageRating: number
     trailer: string
+    poster: string
     genres: string[]
     countries: string[]
+    staff: GetPersonDto[]
 }

@@ -10,4 +10,5 @@ export interface FilmCreationAttr{
     movieLength: number;  
     trailer: string;  
     ageRating: number;
+    poster: string;
 }
