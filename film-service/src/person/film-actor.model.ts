@@ -1,15 +1,15 @@
 import { Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
 import { Film } from "../film/film.model";
-import { Genre } from "./genre.model";
+import { Person } from "./person.model";
 
-@Table({tableName : 'film_genres', createdAt : false, updatedAt : false})
-export class FilmGenres extends Model<FilmGenres>{
+@Table({tableName : 'film_persons', createdAt : false, updatedAt : false})
+export class FilmPersons extends Model<FilmPersons>{
 
     @ForeignKey(() => Film)
     @Column({type : DataType.INTEGER, allowNull: false})
     film_id : number;
 
-    @ForeignKey(() => Genre)
+    @ForeignKey(() => Person)
     @Column({type : DataType.INTEGER, allowNull: false})
-    genre_id : number;
+    person_id : number;
 }

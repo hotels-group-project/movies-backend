@@ -11,6 +11,7 @@ import { GenreService } from './genre.service';
   providers: [GenreService],
   imports : [    
     SequelizeModule.forFeature([Film, Genre, FilmGenres]),     
-  ]
+  ],
+  exports : [GenreService]
 })
 export class GenreModule {}

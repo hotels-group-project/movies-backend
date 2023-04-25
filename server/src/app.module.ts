@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { FilmController } from './film.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { MineController } from './mine.controller';
+import { PersonController } from './person.controller';
 
 @Module({
   imports: [
@@ -18,7 +20,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
       },
     ]),
   ],
-  controllers: [FilmController],
+  controllers: [FilmController, MineController, PersonController],
   providers: [],
 })
 export class AppModule {}
