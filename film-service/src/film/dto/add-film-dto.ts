@@ -1,4 +1,4 @@
-export class AddFilmDto{    
+export interface AddFilmDto{    
     name: string
     alternativeName: string
     year: number

@@ -5,10 +5,10 @@ import { FilmGenres } from "src/genre/film-genre-model";
 import { Genre } from "src/genre/genre.model";
 import { FilmPersons } from "src/person/film-actor.model";
 import { Person } from "src/person/person.model";
-import { FilmCreationAttr } from "./dto/film-creation-dto";
+import { AddFilmDto } from "./dto/add-film-dto";
 
 @Table({tableName : 'films', createdAt : false, updatedAt : false})
-export class Film extends Model<Film, FilmCreationAttr>{
+export class Film extends Model<Film, AddFilmDto>{
 
     @Column({type : DataType.INTEGER, unique : true, autoIncrement : true, primaryKey: true})
     film_id : number;

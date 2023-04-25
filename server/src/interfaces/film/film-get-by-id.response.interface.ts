@@ -1,4 +1,4 @@
-import { GetPersonDto } from "../person/get_person_dto"
+import { GetPersonDto } from "../person/get-person-dto"
 
 export interface IServiceFilmByIdResponse{
     film_id: number 

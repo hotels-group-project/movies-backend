@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Param, Query } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
-import { IServiceFilmByIdResponse } from './interfaces/film/film_get_by_id.response.interface';
+import { IServiceFilmByIdResponse } from './interfaces/film/film-get-by-id.response.interface';
 
 @Controller('movies')
 export class FilmController {
