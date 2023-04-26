@@ -1,6 +1,6 @@
 import { GetPersonDto } from "src/person/dto/get-person-dto"
 
-export interface GetFilmDto{   
+export interface GetFilmByIdDto{   
     film_id: number 
     name: string
     alternativeName: string
