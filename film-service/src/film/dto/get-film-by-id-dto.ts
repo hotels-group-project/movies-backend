@@ -1,6 +1,6 @@
-import { GetPersonDto } from "../person/get_person_dto"
+import { GetPersonDto } from "../../person/dto/get-person-dto"
 
-export interface IServiceFilmByIdResponse{
+export interface GetFilmByIdDto{   
     film_id: number 
     name: string
     alternativeName: string

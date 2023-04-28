@@ -1,6 +1,6 @@
 import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
-import { Film } from "src/film/film.model";
-import { GenreCreationAttr } from "./dto/genre-creation-dto";
+import { Film } from "../film/film.model";
+import { GenreCreationAttr } from "./dto/add-genre-dto";
 import { FilmGenres } from "./film-genre-model";
 
 @Table({tableName : 'genres', createdAt : false, updatedAt : false})

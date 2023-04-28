@@ -3,14 +3,14 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { AddFilmDto } from '../film/dto/add-film-dto';
 import { FilmService } from '../film/film.service';
-import { GenreService } from 'src/genre/genre.service';
+import { GenreService } from '../genre/genre.service';
 import { InjectModel } from '@nestjs/sequelize';
-import { FilmGenres } from 'src/genre/film-genre-model';
-import { Film } from 'src/film/film.model';
-import { CountryService } from 'src/country/country.service';
-import { FilmCountries } from 'src/country/film-country.model';
-import { PersonService } from 'src/person/person.service';
-import { FilmPersons } from 'src/person/film-actor.model';
+import { FilmGenres } from '../genre/film-genre-model';
+import { Film } from '../film/film.model';
+import { CountryService } from '../country/country.service';
+import { FilmCountries } from '../country/film-country.model';
+import { PersonService } from '../person/person.service';
+import { FilmPersons } from '../person/film-actor.model';
 
 @Injectable()
 export class TransferService {
@@ -26,7 +26,7 @@ export class TransferService {
     async moveFilmsIntoDb(){       
         const dataStorage = path.resolve(__dirname, '..', '..', '..', 'data');       
         const files = fs.readdirSync(dataStorage);
-        let data = [];
+        const data = [];
 
         files.forEach(file => {
             data.push(fs.readFileSync(`${dataStorage}\\${file}`, 'utf-8'));

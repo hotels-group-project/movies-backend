@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Op } from 'sequelize';
-import { Country } from 'src/country/country.model';
-import { Genre } from 'src/genre/genre.model';
-import { Person } from 'src/person/person.model';
-import { PersonService } from 'src/person/person.service';
+import { Country } from '../country/country.model';
+import { Genre } from '../genre/genre.model';
+import { Person } from '../person/person.model';
+import { PersonService } from '../person/person.service';
 import { AddFilmDto } from './dto/add-film-dto';
-import { GetFilmDto } from './dto/get-film-dto';
+import { GetFilmByIdDto } from './dto/get-film-by-id-dto';
+import { GetFilmsForPage } from './dto/get-films-for-page-dto';
 import { Film } from './film.model';
 
 @Injectable()
@@ -21,9 +22,14 @@ export class FilmService {
         return await this.filmRepository.create(addFilmDto);
     }
 
-    async getAllFilms() : Promise<GetFilmDto[]> {        
-        const foundMovies = await this.filmRepository.findAll({include : {all : true}, limit: this.filmsLimitInSearch});        
-        const result = this.transformDataForResponse(foundMovies);
+    async getFilmsForPage(page : number) : Promise<GetFilmsForPage[]> {        
+        const foundMovies = await this.filmRepository.findAll({include : {all : true}, offset: (page - 1) * this.filmsLimitInSearch, limit: this.filmsLimitInSearch});        
+        const transformedData = this.transformDataForResponse(foundMovies);
+        let result: GetFilmsForPage[] = [];
+
+        for (let i = 0; i < transformedData.length; i++){
+            result.push( this.transformDataForPageMovie(transformedData[i]) );
+        }
 
         return result;
     }
@@ -32,14 +38,14 @@ export class FilmService {
         return await this.filmRepository.findOne({where : {name : name}});
     }
 
-    async getFilmById(id : number) : Promise<GetFilmDto> {
+    async getFilmById(id : number) : Promise<GetFilmByIdDto> {
         const foundMovie = await this.filmRepository.findOne({where:{film_id : id}, include : {all : true}})
         const result = this.transformDataForSingleMovie(foundMovie);        
 
         return result;
     }
   
-    async getFilmsByParams(searchParams) : Promise<GetFilmDto[]> {        
+    async getFilmsByParams(searchParams) : Promise<GetFilmsForPage[]> {        
         const searchOptions = {include : [{model : Person}], where: [], limit : this.filmsLimitInSearch};
         searchOptions.include.push(this.processGenreOptions(searchParams.genre));
         searchOptions.include.push(this.processCountryOptions(searchParams.country));
@@ -49,7 +55,12 @@ export class FilmService {
         }
 
         const foundMovies = await this.filmRepository.findAll(searchOptions);
-        const result = this.transformDataForResponse(foundMovies);
+        const transformedData = this.transformDataForResponse(foundMovies);
+        let result: GetFilmsForPage[] = [];
+
+        for (let i = 0; i < transformedData.length; i++){
+            result.push( this.transformDataForPageMovie(transformedData[i]) );
+        }
 
         return result;
     }
@@ -86,8 +97,8 @@ export class FilmService {
         return { model: Country }
     }
 
-    transformDataForResponse(movies) : GetFilmDto[] {
-        const result : GetFilmDto[] = [];
+    transformDataForResponse(movies) : GetFilmByIdDto[] {
+        const result : GetFilmByIdDto[] = [];
         for (let i = 0; i < movies.length; i++){
             result.push( this.transformDataForSingleMovie(movies[i]) );
         }
@@ -95,8 +106,24 @@ export class FilmService {
         return result;
     }
 
-    transformDataForSingleMovie(data : Film) : GetFilmDto {
-        let getFilmDto : GetFilmDto = {
+    transformDataForPageMovie(data : GetFilmByIdDto) : GetFilmsForPage{
+        const getFilmByPageDto : GetFilmsForPage = {
+            film_id: data.film_id ,
+            name: data.name,
+            alternativeName: data.alternativeName,
+            year: data.year,                                    
+            kprating: data.kprating,            
+            movieLength: data.movieLength,                        
+            poster: data.poster,
+            genres: data.genres,
+            countries: data.countries,            
+        }  
+
+        return getFilmByPageDto;
+    }
+
+    transformDataForSingleMovie(data : Film) : GetFilmByIdDto {
+        const getFilmDto : GetFilmByIdDto = {
             film_id: data.film_id ,
             name: data.name,
             alternativeName: data.alternativeName,

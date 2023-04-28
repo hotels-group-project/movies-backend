@@ -4,6 +4,7 @@
 /data
 /data_miner
 /package_folder
+/db
 
 # Logs
 logs

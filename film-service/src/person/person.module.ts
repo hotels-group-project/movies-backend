@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Film } from 'src/film/film.model';
+import { Film } from '../film/film.model';
 import { FilmPersons } from './film-actor.model';
 import { PersonController } from './person.controller';
 import { Person } from './person.model';

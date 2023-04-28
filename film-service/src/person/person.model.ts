@@ -37,11 +37,4 @@ export class Person extends Model<Person, PersonCreationAttr>{
  
     @BelongsToMany(() => Film, () => FilmPersons)
     films: Film[];    
-
-    // "photo": "https://st.kp.yandex.net/images/actor_iphone/iphone360_6317.jpg",
-    //   "name": "Пол Уокер",
-    //   "enName": "Paul Walker",
-    //   "description": "string",
-    //   "profession": "string",
-    //   "enProfession": "string"
 }
