@@ -4,6 +4,7 @@ import { ApiProperty, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 import { FilmByIdResponse } from './interfaces/film/film-get-by-id.response';
 import { GetFilmsResponse } from './interfaces/film/get-films-response';
+import { GetStartPage } from './interfaces/film/get-start-page-films';
 
 @Controller('movies')
 export class FilmController {
@@ -39,6 +40,39 @@ export class FilmController {
     return this.client.send('get_films', page);
   }
 
+  @Get('/top')
+  @ApiTags('film')
+  @ApiResponse({
+    status: 200, 
+    description: 'get top 10 films',    
+    type: [GetFilmsResponse]
+  })
+  getTopTen(): Observable<GetFilmsResponse[]> {
+    return this.client.send('get_top_ten', '');
+  }
+
+  @Get('/newFilms')
+  @ApiTags('film')
+  @ApiResponse({
+    status: 200, 
+    description: 'get 10 latests films',    
+    type: [GetFilmsResponse]
+  })
+  getNewFilms(): Observable<GetFilmsResponse[]> {
+    return this.client.send('get_new_films', '');
+  }
+
+  @Get('/startPage')
+  @ApiTags('film')
+  @ApiResponse({
+    status: 200, 
+    description: 'get startPage',    
+    type: GetStartPage    
+  })
+  getStartPage() {
+    return this.client.send('get_start_page', '');
+  }
+
   @Get('/:id')
   @ApiTags('film')
   @ApiResponse({ 
@@ -49,4 +83,5 @@ export class FilmController {
   getFilmById(@Param('id') id: number): Observable<FilmByIdResponse> {    
     return this.client.send('get_film_by_id', id);
   }
+
 }

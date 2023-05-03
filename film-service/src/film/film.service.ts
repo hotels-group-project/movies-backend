@@ -65,6 +65,35 @@ export class FilmService {
         return result;
     }
 
+    async getStartPage() {
+        let movies = {};
+        movies['top10'] = await this.getTopTen('kprating');
+        movies['latest'] = await this.getTopTen('year');
+        movies['popular'] = await this.getTopTen('kpvotes');
+
+        return movies;
+    }
+
+    async getTopTen(filter : string) : Promise<GetFilmsForPage[]> {        
+        const foundMovies = await this.filmRepository.findAll({
+            include : {all : true},
+            order: [
+                [filter, 'DESC'],                
+            ],
+
+            limit : 10
+        });        
+        
+        const transformedData = this.transformDataForResponse(foundMovies);                
+        let result: GetFilmsForPage[] = [];
+
+        for (let i = 0; i < transformedData.length; i++){
+            result.push( this.transformDataForPageMovie(transformedData[i]) );
+        }
+
+        return result;
+    }
+
     processGenreOptions(genreOptions) : any {
         if (genreOptions){
             return {
@@ -98,10 +127,10 @@ export class FilmService {
     }
 
     transformDataForResponse(movies) : GetFilmByIdDto[] {
-        const result : GetFilmByIdDto[] = [];
+        const result : GetFilmByIdDto[] = [];        
         for (let i = 0; i < movies.length; i++){
             result.push( this.transformDataForSingleMovie(movies[i]) );
-        }
+        }        
 
         return result;
     }

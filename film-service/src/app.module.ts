@@ -24,8 +24,8 @@ import { FilmPersons } from './person/film-actor.model';
     dialect: 'postgres',
     host: process.env.POSTGRES_HOST,
     port: Number(process.env.POSTGRES_PORT),
-    username: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
+    username: 'postgres',//process.env.POSTGRES_USER,
+    password: '123123',//process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
     models: [Film, Genre, FilmGenres, Country, FilmCountries, Person, FilmPersons],
     autoLoadModels: true

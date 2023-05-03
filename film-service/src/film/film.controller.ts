@@ -19,7 +19,22 @@ export class FilmController {
   }
 
   @MessagePattern('get_film_by_id')
-  getFilmsById(id: number) : Promise<GetFilmByIdDto> {
+  getFilmsById(id: number) : Promise<GetFilmByIdDto> {    
     return this.filmService.getFilmById(id);
+  }
+
+  @MessagePattern('get_top_ten')
+  getTopTen() : Promise<GetFilmsForPage[]> {    
+    return this.filmService.getTopTen('kprating');
+  }
+
+  @MessagePattern('get_new_films')
+  getNewFilms() : Promise<GetFilmsForPage[]> {    
+    return this.filmService.getTopTen('year');
+  }
+
+  @MessagePattern('get_start_page')
+  getStartPage() {
+    return this.filmService.getStartPage();
   }
 }
