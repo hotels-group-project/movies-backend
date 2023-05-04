@@ -4,6 +4,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MineController } from './mine.controller';
 import { PersonController } from './person.controller';
 import { JwtModule } from '@nestjs/jwt';
+import { AuthController } from './auth.controller';
 
 @Module({
   imports: [
@@ -38,7 +39,7 @@ import { JwtModule } from '@nestjs/jwt';
       }
     }),
   ],
-  controllers: [FilmController, MineController, PersonController],
+  controllers: [FilmController, MineController, PersonController, AuthController],
   providers: [],
 })
 export class AppModule {}

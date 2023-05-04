@@ -97,20 +97,7 @@ export class FilmService {
         const foundMovies = await this.filmRepository.findAll(filter);
 
         return this.getResponse(foundMovies);
-    }
-
-    // async getFilmByType(filter : string, limit : number) : Promise<GetFilmsForPage[]> {
-    //     const foundMovies = await this.filmRepository.findAll({
-    //         include : {all : true},
-    //         where: {
-    //             type: filter
-    //         },
-
-    //         limit : limit
-    //     });
-
-    //     return this.getResponse(foundMovies);
-    // }    
+    }  
 
     async getFilmsSortedBy(filter : string, limit : number) : Promise<GetFilmsForPage[]> {        
         const foundMovies = await this.filmRepository.findAll({
