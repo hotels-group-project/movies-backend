@@ -14,6 +14,9 @@ export class GetFilmForPerson{
     year: number;
 
     @ApiProperty()
+    type: string;
+
+    @ApiProperty()
     kprating: number;    
 
     @ApiProperty()

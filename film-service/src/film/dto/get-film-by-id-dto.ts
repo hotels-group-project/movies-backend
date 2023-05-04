@@ -5,6 +5,7 @@ export interface GetFilmByIdDto{
     name: string
     alternativeName: string
     year: number
+    type: string
     description: string
     shortDescription: string
     slogan: string

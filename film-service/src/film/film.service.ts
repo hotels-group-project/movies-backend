@@ -67,23 +67,65 @@ export class FilmService {
 
     async getStartPage() {
         let movies = {};
-        movies['top10'] = await this.getTopTen('kprating');
-        movies['latest'] = await this.getTopTen('year');
-        movies['popular'] = await this.getTopTen('kpvotes');
+        const moviesLimit = 15;
+        movies['top10'] = await this.getFilmsSortedBy('kprating', 10);
+        movies['latest'] = await this.getFilmsSortedBy('year', moviesLimit);
+        movies['popular'] = await this.getFilmsSortedBy('kpvotes', moviesLimit);    
+        
+        movies['cartoons'] = await this.getFilmByFilter({
+            include : {all : true},
+            where: {
+                type: 'cartoon'
+            },
+            limit : moviesLimit
+        });
+
+        movies['foreign'] = await this.getFilmByFilter({
+            include : [{model : Person}, {model : Genre}, {
+                model : Country, as: "countries", where: {
+                    name: {
+                        [Op.ne]: ('Россия')
+                    }
+                }}],            
+            limit : moviesLimit
+        })
 
         return movies;
     }
 
-    async getTopTen(filter : string) : Promise<GetFilmsForPage[]> {        
+    async getFilmByFilter(filter) : Promise<GetFilmsForPage[]> {
+        const foundMovies = await this.filmRepository.findAll(filter);
+
+        return this.getResponse(foundMovies);
+    }
+
+    // async getFilmByType(filter : string, limit : number) : Promise<GetFilmsForPage[]> {
+    //     const foundMovies = await this.filmRepository.findAll({
+    //         include : {all : true},
+    //         where: {
+    //             type: filter
+    //         },
+
+    //         limit : limit
+    //     });
+
+    //     return this.getResponse(foundMovies);
+    // }    
+
+    async getFilmsSortedBy(filter : string, limit : number) : Promise<GetFilmsForPage[]> {        
         const foundMovies = await this.filmRepository.findAll({
             include : {all : true},
             order: [
                 [filter, 'DESC'],                
             ],
 
-            limit : 10
+            limit : limit
         });        
         
+        return this.getResponse(foundMovies);
+    }    
+
+    getResponse(foundMovies) : GetFilmsForPage[]{
         const transformedData = this.transformDataForResponse(foundMovies);                
         let result: GetFilmsForPage[] = [];
 
@@ -137,10 +179,11 @@ export class FilmService {
 
     transformDataForPageMovie(data : GetFilmByIdDto) : GetFilmsForPage{
         const getFilmByPageDto : GetFilmsForPage = {
-            film_id: data.film_id ,
+            film_id: data.film_id ,            
             name: data.name,
             alternativeName: data.alternativeName,
-            year: data.year,                                    
+            year: data.year,                    
+            type: data.type,                
             kprating: data.kprating,            
             movieLength: data.movieLength,                        
             poster: data.poster,
@@ -157,6 +200,7 @@ export class FilmService {
             name: data.name,
             alternativeName: data.alternativeName,
             year: data.year,
+            type: data.type,
             description: data.description,
             shortDescription: data.shortDescription,
             slogan: data.slogan,

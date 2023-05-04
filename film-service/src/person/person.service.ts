@@ -56,6 +56,7 @@ export class PersonService {
             alternativeName: filmDto.alternativeName,
             year: filmDto.year,
             kprating: filmDto.kprating,  
+            type: filmDto.type,
             poster: filmDto.poster
         }
     }

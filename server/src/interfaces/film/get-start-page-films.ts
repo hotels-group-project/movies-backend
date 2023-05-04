@@ -10,4 +10,10 @@ export class GetStartPage {
 
     @ApiProperty({ type: () => [GetFilmsResponse] })
     popular: GetFilmsResponse[]
+
+    @ApiProperty({ type: () => [GetFilmsResponse] })
+    cartoons: GetFilmsResponse[]
+
+    @ApiProperty({ type: () => [GetFilmsResponse] })
+    foreign: GetFilmsResponse[]
 }

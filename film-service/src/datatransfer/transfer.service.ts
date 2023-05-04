@@ -106,6 +106,7 @@ export class TransferService {
             name : parsedData.name,
             alternativeName : parsedData.alternativeName,
             year : parsedData.year,
+            type: parsedData.type,
             ageRating : parsedData.ageRating,        
             description: parsedData.description,
             shortDescription: parsedData.shortDescription,

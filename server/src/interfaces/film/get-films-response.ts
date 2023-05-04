@@ -17,6 +17,9 @@ export class GetFilmsResponse{
     kprating: number;
 
     @ApiProperty()
+    type: string;
+
+    @ApiProperty()
     movieLength: number;
 
     @ApiProperty()

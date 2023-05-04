@@ -30,6 +30,9 @@ export class FilmByIdResponse{
     kpvotes: number;
 
     @ApiProperty()
+    type: string;
+
+    @ApiProperty()
     movieLength: number;
 
     @ApiProperty()

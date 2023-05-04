@@ -11,4 +11,5 @@ export interface AddFilmDto{
     ageRating: number
     trailer: string
     poster: string
+    type: string
 }

@@ -32,6 +32,9 @@ export class Film extends Model<Film, AddFilmDto>{
     slogan: string
 
     @Column({type : DataType.TEXT})
+    type: string
+
+    @Column({type : DataType.TEXT})
     trailer : string
 
     @Column({type : DataType.TEXT})

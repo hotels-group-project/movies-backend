@@ -5,6 +5,7 @@ export class GetFilmsForPage{
     year: number;
     kprating: number;
     movieLength: number;
+    type: string;
     poster: string;
     genres: string[];
     countries: string[];

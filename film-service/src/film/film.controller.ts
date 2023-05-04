@@ -25,12 +25,12 @@ export class FilmController {
 
   @MessagePattern('get_top_ten')
   getTopTen() : Promise<GetFilmsForPage[]> {    
-    return this.filmService.getTopTen('kprating');
+    return this.filmService.getFilmsSortedBy('kprating', 10);
   }
 
   @MessagePattern('get_new_films')
   getNewFilms() : Promise<GetFilmsForPage[]> {    
-    return this.filmService.getTopTen('year');
+    return this.filmService.getFilmsSortedBy('year', 10);
   }
 
   @MessagePattern('get_start_page')
