@@ -5,6 +5,7 @@
 /data_miner
 /package_folder
 /db
+/auth-service
 
 # Logs
 logs
