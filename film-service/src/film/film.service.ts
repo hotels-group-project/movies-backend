@@ -68,9 +68,7 @@ export class FilmService {
     async getStartPage() {
         let movies = {};
         const moviesLimit = 15;
-        movies['top10'] = await this.getFilmsSortedBy('kprating', 10);
-        movies['latest'] = await this.getFilmsSortedBy('year', moviesLimit);
-        movies['popular'] = await this.getFilmsSortedBy('kpvotes', moviesLimit);    
+        movies['top10'] = await this.getFilmsSortedBy('kprating', 10);            
         
         movies['cartoons'] = await this.getFilmByFilter({
             include : {all : true},
@@ -170,7 +168,8 @@ export class FilmService {
             name: data.name,
             alternativeName: data.alternativeName,
             year: data.year,                    
-            type: data.type,                
+            type: data.type,
+            ageRating: data.ageRating,                
             kprating: data.kprating,            
             movieLength: data.movieLength,                        
             poster: data.poster,

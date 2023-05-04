@@ -17,6 +17,9 @@ export class GetFilmsResponse{
     kprating: number;
 
     @ApiProperty()
+    ageRating: number;
+
+    @ApiProperty()
     type: string;
 
     @ApiProperty()

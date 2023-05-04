@@ -6,6 +6,7 @@ export class GetFilmsForPage{
     kprating: number;
     movieLength: number;
     type: string;
+    ageRating: number;
     poster: string;
     genres: string[];
     countries: string[];
