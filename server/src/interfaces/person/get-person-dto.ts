@@ -1,6 +1,15 @@
+import { ApiProperty } from "@nestjs/swagger"
+
 export class GetPersonDto{   
-    person_id: number 
-    name: string     
-    photo: string    
+    @ApiProperty()
+    person_id: number ;
+
+    @ApiProperty()
+    name: string;
+
+    @ApiProperty()   
+    photo: string;
+    
+    @ApiProperty()   
     profession: string    
 }

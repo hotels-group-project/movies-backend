@@ -1,24 +1,46 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
-import { GetFilmDto } from './dto/get-film-dto';
+import { GetFilmByIdDto } from './dto/get-film-by-id-dto';
+import { GetFilmsForPage } from './dto/get-films-for-page-dto';
 import { FilmService } from './film.service';
+import { GetFilmPage } from './dto/get-film-page-dto';
 
 @Controller()
 export class FilmController {
   constructor(private readonly filmService: FilmService) {}
 
   @MessagePattern('get_films')
-  getAllFilms() : Promise<GetFilmDto[]> {
-    return this.filmService.getAllFilms();
+  getFilmsForPage(page: number) : Promise<GetFilmsForPage[]> {
+    return this.filmService.getFilmsForPage(page);
   }  
 
   @MessagePattern('get_films_by_params')
-  getFilmsByParams(searchParams: string){
+  getFilmsByParams(searchParams: string) : Promise<GetFilmsForPage[]>{
     return this.filmService.getFilmsByParams(searchParams);
   }
 
   @MessagePattern('get_film_by_id')
-  getFilmsById(id: number){
+  getFilmById(id: number) : Promise<GetFilmByIdDto> {    
     return this.filmService.getFilmById(id);
+  }
+
+  @MessagePattern('get_film_page')
+  getFilmPage(id: number) : Promise<GetFilmPage> {
+    return this.filmService.getFilmPage(id);
+  }
+
+  @MessagePattern('get_top_ten')
+  getTopTen() : Promise<GetFilmsForPage[]> {    
+    return this.filmService.getFilmsSortedBy('kprating', 10);
+  }
+
+  @MessagePattern('get_new_films')
+  getNewFilms() : Promise<GetFilmsForPage[]> {    
+    return this.filmService.getFilmsSortedBy('year', 10);
+  }
+
+  @MessagePattern('get_start_page')
+  getStartPage() {
+    return this.filmService.getStartPage();
   }
 }
