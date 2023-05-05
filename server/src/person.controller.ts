@@ -12,7 +12,7 @@ export class PersonController {
   @ApiResponse({ 
     status: 200, 
     description: 'get person information',    
-    type: [GetPersonResponse]
+    type: GetPersonResponse
   })
   getPersons(@Param('id') id : number) {
     return this.client.send('get_person', id);

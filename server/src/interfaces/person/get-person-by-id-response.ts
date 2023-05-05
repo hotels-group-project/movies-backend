@@ -23,6 +23,6 @@ export class GetPersonResponse{
     @ApiProperty()
     enProfession: string;
 
-    @ApiProperty({ type: () => GetFilmForPerson })
+    @ApiProperty({ type: () => [GetFilmForPerson] })
     films : GetFilmForPerson[]
 }
