@@ -1,10 +1,11 @@
-import { GetPersonDto } from "src/person/dto/get-person-dto"
+import { GetPersonDto } from "../../person/dto/get-person-dto"
 
-export interface GetFilmDto{   
+export interface GetFilmByIdDto{   
     film_id: number 
     name: string
     alternativeName: string
     year: number
+    type: string
     description: string
     shortDescription: string
     slogan: string
