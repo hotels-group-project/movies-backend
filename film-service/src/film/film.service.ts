@@ -9,6 +9,7 @@ import { AddFilmDto } from './dto/add-film-dto';
 import { GetFilmByIdDto } from './dto/get-film-by-id-dto';
 import { GetFilmsForPage } from './dto/get-films-for-page-dto';
 import { Film } from './film.model';
+import { GetFilmPage } from './dto/get-film-page-dto';
 
 @Injectable()
 export class FilmService {
@@ -41,6 +42,25 @@ export class FilmService {
     async getFilmById(id : number) : Promise<GetFilmByIdDto> {
         const foundMovie = await this.filmRepository.findOne({where:{film_id : id}, include : {all : true}})
         const result = this.transformDataForSingleMovie(foundMovie);        
+
+        return result;
+    }    
+
+    async getFilmPage(id : number) : Promise<GetFilmPage> {
+        const film = await this.getFilmById(id);
+        const result : GetFilmPage = {
+            film : film,
+            lookWith: await this.getFilmByFilter({
+                include : {all : true},
+                where: {
+                    type: film.type,
+                    film_id: {
+                        [Op.ne]: film.film_id
+                    }
+                },
+            limit : 10
+            })
+        }
 
         return result;
     }

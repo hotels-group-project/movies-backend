@@ -50,6 +50,6 @@ export class FilmByIdResponse{
     @ApiProperty()
     countries: string[];
 
-    @ApiProperty({ type: () => GetPersonDto })
+    @ApiProperty({ type: () => [GetPersonDto] })
     staff: GetPersonDto[]
 }

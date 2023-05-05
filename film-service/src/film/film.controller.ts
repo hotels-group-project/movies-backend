@@ -3,6 +3,7 @@ import { MessagePattern, Payload } from '@nestjs/microservices';
 import { GetFilmByIdDto } from './dto/get-film-by-id-dto';
 import { GetFilmsForPage } from './dto/get-films-for-page-dto';
 import { FilmService } from './film.service';
+import { GetFilmPage } from './dto/get-film-page-dto';
 
 @Controller()
 export class FilmController {
@@ -19,8 +20,13 @@ export class FilmController {
   }
 
   @MessagePattern('get_film_by_id')
-  getFilmsById(id: number) : Promise<GetFilmByIdDto> {    
+  getFilmById(id: number) : Promise<GetFilmByIdDto> {    
     return this.filmService.getFilmById(id);
+  }
+
+  @MessagePattern('get_film_page')
+  getFilmPage(id: number) : Promise<GetFilmPage> {
+    return this.filmService.getFilmPage(id);
   }
 
   @MessagePattern('get_top_ten')

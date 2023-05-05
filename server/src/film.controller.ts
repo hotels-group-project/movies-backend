@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { FilmByIdResponse } from './interfaces/film/film-get-by-id.response';
 import { GetFilmsResponse } from './interfaces/film/get-films-response';
 import { GetStartPage } from './interfaces/film/get-start-page-films';
+import { GetFilmPage } from './interfaces/film/get-film-page.response';
 
 @Controller('movies')
 export class FilmController {
@@ -77,11 +78,11 @@ export class FilmController {
   @ApiTags('film')
   @ApiResponse({ 
     status: 200, 
-    description: 'get film by id',    
-    type: FilmByIdResponse 
+    description: 'get film page by film id',    
+    type: GetFilmPage
   })
-  getFilmById(@Param('id') id: number): Observable<FilmByIdResponse> {    
-    return this.client.send('get_film_by_id', id);
+  getFilmById(@Param('id') id: number): Observable<GetFilmPage> {    
+    return this.client.send('get_film_page', id);
   }
 
 }
