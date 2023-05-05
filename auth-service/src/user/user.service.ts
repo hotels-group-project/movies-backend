@@ -19,6 +19,7 @@ export class UserService {
 
     async getUserByEmail(email : string){
         const user = this.userRepository.findOne({ where : { email : email} });
+        console.log('15');
         return user;
     }
 }
