@@ -5,6 +5,7 @@
 [![NestJS](https://img.shields.io/badge/-NestJS-4A4A4A?style=for-the-badge&logo=NestJS&logoColor=E0234E)](https://nestjs.com/)
 [![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-4A4A4A?style=for-the-badge&logo=PostgreSQL&logoColor=60A5FA)](https://www.postgresql.org/)
 [![RabbitMQ](https://img.shields.io/badge/-RabbitMQ-4A4A4A?style=for-the-badge&logo=RabbitMQ&logoColor=FF6600)](https://www.rabbitmq.com/)
+[![Docker](https://img.shields.io/badge/-Docker-4A4A4A?style=for-the-badge&logo=Docker&logoColor=2496ED)](https://www.docker.com/)
 
 ## Обзор
 
