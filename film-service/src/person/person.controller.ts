@@ -10,4 +10,14 @@ export class PersonController {
     getPersonById(id: number) : any {
         return this.personService.getPersonById(id);
     }  
+
+    @MessagePattern('get_by_profession')
+    getAllActors(profession : string) : any {
+        return this.personService.getAllActors(profession);
+    }  
+
+    @MessagePattern('get_actor_by_params')
+    getPersonByParams(params) : any {
+        return this.personService.getPersonByParams(params);
+    }
 }

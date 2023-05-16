@@ -13,7 +13,8 @@ import { AuthController } from './auth.controller';
         name: 'FILM_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://localhost:5672'],
+          urls://['amqp://localhost:5672'], 
+                ['amqp://rabbitmq:5672'],
           queue: 'film_queue',
           queueOptions: {
             durable: false,
@@ -24,7 +25,8 @@ import { AuthController } from './auth.controller';
         name: 'AUTH_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: ['amqp://localhost:5672'],
+          urls://['amqp://localhost:5672'], 
+                ['amqp://rabbitmq:5672'],
           queue: 'auth_queue',
           queueOptions: {
             durable: false

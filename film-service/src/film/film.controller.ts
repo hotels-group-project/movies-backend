@@ -15,7 +15,7 @@ export class FilmController {
   }  
 
   @MessagePattern('get_films_by_params')
-  getFilmsByParams(searchParams: string) : Promise<GetFilmsForPage[]>{
+  getFilmsByParams(searchParams) : Promise<GetFilmsForPage[]>{
     return this.filmService.getFilmsByParams(searchParams);
   }
 
@@ -42,5 +42,10 @@ export class FilmController {
   @MessagePattern('get_start_page')
   getStartPage() {
     return this.filmService.getStartPage();
+  }
+
+  @MessagePattern('get_main_page')
+  getMainPage() {
+    return this.filmService.getMainPage();
   }
 }

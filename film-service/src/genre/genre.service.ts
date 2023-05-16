@@ -14,4 +14,11 @@ export class GenreService {
     async getGenreByName(name : string){
         return await this.genreRepository.findOne({where : {name : name}});
     }
+
+    async getAllGenres(){
+        return await this.genreRepository.findAll({
+            attributes: ["name"],
+            group: "name",
+          });
+    }
 }

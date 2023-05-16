@@ -5,17 +5,33 @@ import { AddPersonDto } from './dto/add-person-dto';
 import { GetPersonByIdDto } from './dto/get-person-by-id-dto';
 import { GetPersonDto } from './dto/get-person-dto';
 import { Person } from './person.model';
+import { Op } from 'sequelize';
+import { GetPersonBySearchParams } from './dto/get-person-by-search-params.dto';
 
 @Injectable()
 export class PersonService {    
 
     constructor(@InjectModel(Person) private personRepository : typeof Person){}
-    
-    async getAllActors(){
-        return await this.personRepository.findAll({include : {all : true}});
+
+    async getAllActors(profession : string) : Promise<GetPersonBySearchParams[]> {
+        return await this.personRepository.findAll({            
+            attributes: ['person_id', 'name'],                  
+            where : {
+                enProfession: profession,
+                name: {[Op.not]: null}
+            }
+        });
     }
 
-    async getPersonById(id: number){
+    async getPersonByNameAndProfession(name : string, enProfession : string) {
+        return await this.personRepository.findOne({
+            where: {
+                name : name,
+                enProfession : enProfession
+            }});
+    }
+
+    async getPersonById(id: number) : Promise<GetPersonByIdDto> {
         const data = await this.personRepository.findOne({include : {all : true}, where: {person_id: id}});
         const person = this.transformToGetPersonById(data);        
 
@@ -26,11 +42,28 @@ export class PersonService {
         return await this.personRepository.create(addPersonDto);
     }
 
-    async getPersonByName(name: string){
-        return await this.personRepository.findOne({where : {name : name}});
+    async getPersonByParams(params) : Promise<GetPersonBySearchParams[]> {        
+        let searchParams = {
+            name : {
+                [Op.substring]: params.name, 
+            },
+            enProfession: {
+                [Op.not] : null
+            }
+        }
+
+        if (params.profession){
+            searchParams.enProfession = params.profession;
+        }
+        
+        return await this.personRepository.findAll({
+            attributes: ['person_id', 'name'],
+            where: searchParams,
+            limit: 10
+        })        
     }
 
-    transformToGetPersonById(person) {
+    transformToGetPersonById(person) : GetPersonByIdDto {
         const result : GetPersonByIdDto = {
             person_id : person.person_id,
             name : person.name,       
@@ -61,7 +94,7 @@ export class PersonService {
         }
     }
 
-    transformToGetPersonDto(person) {
+    transformToGetPersonDto(person) : GetPersonDto {
         const getPersonDto : GetPersonDto = {
             person_id : person.person_id,
             name : person.name,       

@@ -1,0 +1,41 @@
+version: "3.9"
+services:
+  server:
+    build: ./server
+    ports:
+      - "5000:5000"
+    depends_on:
+      - rabbitmq
+
+  film-service:
+    build: ./film-service
+    env_file:
+      - .env
+    depends_on:
+      - rabbitmq
+      - postgres
+  
+  auth-service:
+    build: ./auth-service
+    depends_on:
+      - rabbitmq
+      - postgres
+
+  rabbitmq:
+    image: rabbitmq:3.11-alpine
+    hostname: rabbitmq    
+    ports:
+      - 15672:15672
+      - 5672:5672
+
+  postgres:
+    image: di828/movies-backend:backup
+    hostname: postgres    
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: 123123
+    ports:
+      - "5432:5432"
+    volumes:      
+      - ./db/data:/var/lib/postgresql/data

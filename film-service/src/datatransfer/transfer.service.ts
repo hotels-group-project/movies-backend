@@ -24,24 +24,28 @@ export class TransferService {
                 @InjectModel(FilmPersons) private filmPersonsRepository : typeof FilmPersons,){}
 
     async moveFilmsIntoDb(){       
-        const dataStorage = path.resolve(__dirname, '..', '..', '..', 'data');       
+        const dataStorage = path.resolve(__dirname, '..', '..', '..', 'data');    
         const files = fs.readdirSync(dataStorage);
-        const data = [];
+        const data = [];        
 
         files.forEach(file => {
-            data.push(fs.readFileSync(`${dataStorage}\\${file}`, 'utf-8'));
+            data.push(fs.readFileSync(`${dataStorage}\/${file}`, 'utf-8'));
         });  
 
         const filmsToProceed = data.length;           
         for (let i = 0; i < filmsToProceed; i++){            
             try {
                 let parsedData = await JSON.parse(data[i]); 
-                if (parsedData.name){
+                if (parsedData.name){     
+                    if (!parsedData.alternativeName) {
+                        parsedData.alternativeName = files[i].substring(0, files[i].length - 5);
+                    }
                     await this.addDataToDB(parsedData);
                 }
             } catch {}
         }  
-
+                
+        console.log(files[0]);
         return {message : 'success', filmsProcessed : data.length}
     } 
 
@@ -61,7 +65,7 @@ export class TransferService {
         const staff = parsedData.persons;        
   
         for (let i = 0; i < staff.length; i++){
-            let person = await this.personService.getPersonByName(staff[i].name);
+            let person = await this.personService.getPersonByNameAndProfession(staff[i].name, staff[i].enProfession);
             if (!person) {
                 person = await this.personService.addPerson(staff[i]);
             }  
@@ -104,7 +108,7 @@ export class TransferService {
 
         const addFilmDto : AddFilmDto = {
             name : parsedData.name,
-            alternativeName : parsedData.alternativeName,
+            alternativeName : parsedData.enName || parsedData.alternativeName,
             year : parsedData.year,
             type: parsedData.type,
             ageRating : parsedData.ageRating,        

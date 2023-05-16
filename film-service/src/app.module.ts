@@ -20,13 +20,24 @@ import { FilmPersons } from './person/film-actor.model';
     ConfigModule.forRoot({
     envFilePath: '.env'
   }),
+  // SequelizeModule.forRoot({
+  //   dialect: 'postgres',
+  //   host: process.env.POSTGRES_HOST,
+  //   port: Number(process.env.POSTGRES_PORT),
+  //   username: 'postgres',
+  //   password: '123123',
+  //   database: process.env.POSTGRES_DB,
+  //   models: [Film, Genre, FilmGenres, Country, FilmCountries, Person, FilmPersons],
+  //   autoLoadModels: true
+  // }),
   SequelizeModule.forRoot({
     dialect: 'postgres',
-    host: process.env.POSTGRES_HOST,
-    port: Number(process.env.POSTGRES_PORT),
-    username: 'postgres',//process.env.POSTGRES_USER,
-    password: '123123',//process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
+    host://'localhost', 
+          'postgres',
+    port: 5432,
+    username: 'postgres',
+    password: '123123',
+    database: 'postgres',
     models: [Film, Genre, FilmGenres, Country, FilmCountries, Person, FilmPersons],
     autoLoadModels: true
   }),
