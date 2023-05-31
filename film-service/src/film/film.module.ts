@@ -10,12 +10,13 @@ import { FilmCountries } from '../country/film-country.model';
 import { Person } from '../person/person.model';
 import { FilmPersons } from '../person/film-actor.model';
 import { PersonModule } from '../person/person.module';
+import { Review } from '../review/review.model';
 
 @Module({
   providers: [FilmService],
   controllers: [FilmController],
   imports : [    
-    SequelizeModule.forFeature([Film, Genre, FilmGenres, Country, FilmCountries, Person, FilmPersons]),     
+    SequelizeModule.forFeature([Film, Genre, FilmGenres, Country, FilmCountries, Person, FilmPersons, Review]),     
     PersonModule
   ],
   exports : [

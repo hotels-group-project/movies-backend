@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger"
 import { GetPersonDto } from "../person/get-person-dto"
+import { GetReviewDto } from "../review/get-review.dto";
 
 export class FilmByIdResponse{
     @ApiProperty()
@@ -51,5 +52,8 @@ export class FilmByIdResponse{
     countries: string[];
 
     @ApiProperty({ type: () => [GetPersonDto] })
-    staff: GetPersonDto[]
+    staff: GetPersonDto[];
+
+    @ApiProperty({type: () => [GetReviewDto] })
+    reviews: GetReviewDto[];
 }

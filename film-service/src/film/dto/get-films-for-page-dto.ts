@@ -4,6 +4,7 @@ export class GetFilmsForPage{
     alternativeName: string;
     year: number;
     kprating: number;
+    kpvotes: number;
     movieLength: number;
     type: string;
     ageRating: number;

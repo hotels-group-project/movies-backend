@@ -10,4 +10,14 @@ export class CountryController {
     getAllCountries() : Promise<any[]> {
         return this.countryService.getAllCountries();     
     }   
+
+    @MessagePattern('add_country')
+    addCountry(addCountryDto) : Promise<any> {
+        return this.countryService.addCountry(addCountryDto.name);
+    }  
+
+    @MessagePattern('update_country')
+    updateGenre(updateCountryDto) : Promise<any> {
+        return this.countryService.updateCountry(updateCountryDto);
+    }      
 }

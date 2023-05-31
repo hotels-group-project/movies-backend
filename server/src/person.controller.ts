@@ -4,6 +4,7 @@ import { ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetPersonResponse } from './interfaces/person/get-person-by-id-response';
 import { GetPersonBySearchParamsDto } from './interfaces/person/get-person-by-search-params.dto';
 import { Observable } from 'rxjs';
+import { GetPersonForSliderDto } from './interfaces/person/get-person-for-slider.dto';
 
 @Controller()
 export class PersonController {
@@ -49,13 +50,24 @@ export class PersonController {
     description: 'get person name and id by search params',        
     type: [GetPersonBySearchParamsDto]
   })  
-  @ApiQuery({ name: 'profession', required: false, description: 'producer, actor or leave empty for any profession' })
+  @ApiQuery({ name: 'profession', required: false, description: 'director, actor or leave empty for any profession' })
   @ApiQuery({ name: 'name', required: false })  
   getPersonByName(    
     @Query('profession') profession: string,
     @Query('name') name: string,    
   ): Observable<GetPersonBySearchParamsDto[]> {    
     let searchParams = {profession : profession, name : name}
-    return this.client.send('get_actor_by_params', searchParams);
+    return this.client.send('get_person_by_params', searchParams);
   }
+
+    @Get('personsForSlider')
+    @ApiTags('Person')
+    @ApiResponse({ 
+        status: 200, 
+        description: 'get persons for slider',        
+        type: [GetPersonForSliderDto]
+    }) 
+    getPersonsForSlider(){
+        return this.client.send('get_persons_for_slider', {});
+    } 
 }

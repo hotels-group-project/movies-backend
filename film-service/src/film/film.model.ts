@@ -1,4 +1,4 @@
-import { BelongsToMany, Column, DataType, Model, Table } from "sequelize-typescript";
+import { BelongsToMany, Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 import { Country } from "../country/country.model";
 import { FilmCountries } from "../country/film-country.model";
 import { FilmGenres } from "../genre/film-genre-model";
@@ -6,6 +6,7 @@ import { Genre } from "../genre/genre.model";
 import { FilmPersons } from "../person/film-actor.model";
 import { Person } from "../person/person.model";
 import { AddFilmDto } from "./dto/add-film-dto";
+import { Review } from "../review/review.model";
 
 @Table({tableName : 'films', createdAt : false, updatedAt : false})
 export class Film extends Model<Film, AddFilmDto>{
@@ -61,4 +62,6 @@ export class Film extends Model<Film, AddFilmDto>{
     @BelongsToMany(() => Person, () => FilmPersons)
     staff: Person[];
 
+    @HasMany(() => Review)
+    reviews: Review[];
 }

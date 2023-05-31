@@ -10,5 +10,15 @@ export class GenreController {
     getAllGenres() : Promise<any[]> {
         const result = this.genreService.getAllGenres();        
         return result;
-  }  
+    }  
+
+    @MessagePattern('add_genre')
+    addGenre(addGenreDto) : Promise<any> {
+        return this.genreService.addGenre(addGenreDto.name);
+    }  
+
+    @MessagePattern('update_genre')
+    updateGenre(updateGenreDto) : Promise<any> {
+        return this.genreService.updateGenre(updateGenreDto);
+    }      
 }

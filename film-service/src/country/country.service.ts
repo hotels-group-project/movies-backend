@@ -15,9 +15,12 @@ export class CountryService {
     }
 
     async getAllCountries(){
-        return await this.countryRepository.findAll({
-            attributes: ["name"],
-            group: "name",
-          });
+        return await this.countryRepository.findAll();
+    }
+
+    async updateCountry(updateCountryDto) {
+        let updatedCountry = await this.countryRepository.findOne({where : {country_id : updateCountryDto.id}});
+        updatedCountry.name = updateCountryDto.name;
+        return await updatedCountry.save();
     }
 }

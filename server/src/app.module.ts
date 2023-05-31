@@ -5,6 +5,9 @@ import { MineController } from './mine.controller';
 import { PersonController } from './person.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
+import { GenresController } from './genre.controller';
+import { CountryController } from './country.controller';
+import { ReviewController } from './review.controller';
 
 @Module({
   imports: [
@@ -13,8 +16,7 @@ import { AuthController } from './auth.controller';
         name: 'FILM_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls://['amqp://localhost:5672'], 
-                ['amqp://rabbitmq:5672'],
+          urls: ['amqp://rabbitmq:5672'],
           queue: 'film_queue',
           queueOptions: {
             durable: false,
@@ -25,8 +27,7 @@ import { AuthController } from './auth.controller';
         name: 'AUTH_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls://['amqp://localhost:5672'], 
-                ['amqp://rabbitmq:5672'],
+          urls: ['amqp://rabbitmq:5672'],
           queue: 'auth_queue',
           queueOptions: {
             durable: false
@@ -41,7 +42,7 @@ import { AuthController } from './auth.controller';
       }
     }),
   ],
-  controllers: [FilmController, MineController, PersonController, AuthController],
+  controllers: [FilmController, MineController, PersonController, AuthController, GenresController, CountryController, ReviewController],
   providers: [],
 })
 export class AppModule {}

@@ -16,9 +16,12 @@ export class GenreService {
     }
 
     async getAllGenres(){
-        return await this.genreRepository.findAll({
-            attributes: ["name"],
-            group: "name",
-          });
+        return await this.genreRepository.findAll();
+    }    
+
+    async updateGenre(updateGenreDto) {
+        let updatedGenre = await this.genreRepository.findOne({where : {genre_id : updateGenreDto.id}});
+        updatedGenre.name = updateGenreDto.name;
+        return await updatedGenre.save();
     }
 }
