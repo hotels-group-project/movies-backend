@@ -14,6 +14,8 @@ import { CountryModule } from './country/country.module';
 import { PersonModule } from './person/person.module';
 import { Person } from './person/person.model';
 import { FilmPersons } from './person/film-actor.model';
+import { ReviewModule } from './review/review.module';
+import { Review } from './review/review.model';
 
 @Module({
   imports: [  
@@ -22,12 +24,12 @@ import { FilmPersons } from './person/film-actor.model';
   }),
   SequelizeModule.forRoot({
     dialect: 'postgres',
-    host: process.env.POSTGRES_HOST,
-    port: Number(process.env.POSTGRES_PORT),
-    username: 'postgres',//process.env.POSTGRES_USER,
-    password: '123123',//process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
-    models: [Film, Genre, FilmGenres, Country, FilmCountries, Person, FilmPersons],
+    host: 'postgres',
+    port: 5432,
+    username: 'postgres',
+    password: '123123',
+    database: 'postgres',
+    models: [Film, Genre, FilmGenres, Country, FilmCountries, Person, FilmPersons, Review],
     autoLoadModels: true
   }),
     HttpModule,
@@ -35,7 +37,8 @@ import { FilmPersons } from './person/film-actor.model';
     GenreModule,
     TransferModule,
     CountryModule,
-    PersonModule
+    PersonModule,
+    ReviewModule
   ],
   controllers: [],
   providers: [],

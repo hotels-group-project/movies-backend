@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import { RegistrationDto } from './dto/registration.dto';
@@ -16,6 +16,7 @@ export class AuthService {
         try {   
             const user = await this.validateUser(loginDto);
             const token = await this.generateToken(user);
+
             return {
                 code: 200,
                 message: "success",
@@ -40,7 +41,7 @@ export class AuthService {
             }
         }
 
-        if (await this.emailExists(registrationDto.email)){
+        if (await this.emailExists(registrationDto.email)){            
             return {
                 code: 400,
                 message: 'Email уже используется',
@@ -49,11 +50,10 @@ export class AuthService {
         }
         
         const salt = 5; 
-        const hashPassword = await bcrypt.hash(registrationDto.password, salt);
-
-        const user = await this.userService.createUser({...registrationDto, password : hashPassword, role : 'User'});
-        
+        const hashPassword = await bcrypt.hash(registrationDto.password, salt);        
+        const user = await this.userService.createUser({...registrationDto, password : hashPassword, role : 'User'});        
         const token = await this.generateToken(user);
+
         return {
             code: 200,
             message: "success",

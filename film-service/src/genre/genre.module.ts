@@ -7,11 +7,11 @@ import { Genre } from './genre.model';
 import { GenreService } from './genre.service';
 
 @Module({
-  controllers: [GenreController],
-  providers: [GenreService],
-  imports : [    
-    SequelizeModule.forFeature([Film, Genre, FilmGenres]),     
-  ],
-  exports : [GenreService]
+    controllers: [GenreController],
+    providers: [GenreService],
+    imports : [    
+        SequelizeModule.forFeature([Film, Genre, FilmGenres]),     
+    ],
+    exports : [GenreService]
 })
 export class GenreModule {}

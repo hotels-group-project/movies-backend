@@ -13,4 +13,14 @@ export class CountryService {
     async getCountryByName(name : string){
         return await this.countryRepository.findOne({where : {name : name}});
     }
+
+    async getAllCountries(){
+        return await this.countryRepository.findAll();
+    }
+
+    async updateCountry(updateCountryDto) {
+        const updatedCountry = await this.countryRepository.findOne({where : {country_id : updateCountryDto.id}});
+        updatedCountry.name = updateCountryDto.name;
+        return await updatedCountry.save();
+    }
 }

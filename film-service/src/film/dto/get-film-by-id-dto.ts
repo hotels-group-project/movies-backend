@@ -1,3 +1,4 @@
+import { Review } from "src/review/review.model"
 import { GetPersonDto } from "../../person/dto/get-person-dto"
 
 export interface GetFilmByIdDto{   
@@ -18,4 +19,5 @@ export interface GetFilmByIdDto{
     genres: string[]
     countries: string[]
     staff: GetPersonDto[]
+    reviews: Review[]
 }

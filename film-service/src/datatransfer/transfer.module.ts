@@ -11,9 +11,10 @@ import { PersonModule } from '../person/person.module';
 import { FilmPersons } from '../person/film-actor.model';
 
 @Module({
-  providers: [TransferService],
-  controllers: [TransferController],
-  imports: [FilmModule, GenreModule, CountryModule, PersonModule,
-    SequelizeModule.forFeature([FilmGenres, FilmCountries, FilmPersons]),]
+    providers: [TransferService],
+    controllers: [TransferController],
+    imports: [FilmModule, GenreModule, CountryModule, PersonModule,
+        SequelizeModule.forFeature([FilmGenres, FilmCountries, FilmPersons]),
+    ]
 })
 export class TransferModule {}
