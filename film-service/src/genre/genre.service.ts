@@ -20,7 +20,7 @@ export class GenreService {
     }    
 
     async updateGenre(updateGenreDto) {
-        let updatedGenre = await this.genreRepository.findOne({where : {genre_id : updateGenreDto.id}});
+        const updatedGenre = await this.genreRepository.findOne({where : {genre_id : updateGenreDto.id}});
         updatedGenre.name = updateGenreDto.name;
         return await updatedGenre.save();
     }

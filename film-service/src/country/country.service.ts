@@ -19,7 +19,7 @@ export class CountryService {
     }
 
     async updateCountry(updateCountryDto) {
-        let updatedCountry = await this.countryRepository.findOne({where : {country_id : updateCountryDto.id}});
+        const updatedCountry = await this.countryRepository.findOne({where : {country_id : updateCountryDto.id}});
         updatedCountry.name = updateCountryDto.name;
         return await updatedCountry.save();
     }

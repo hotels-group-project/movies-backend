@@ -47,7 +47,7 @@ export class PersonService {
 
         const nameFilter = this.parseNameParams(params.name);        
 
-        let searchParams = {        
+        const searchParams = {        
             name : {
                 [Op.substring]: nameFilter, 
             },

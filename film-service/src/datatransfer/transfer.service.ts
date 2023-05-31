@@ -26,16 +26,16 @@ export class TransferService {
     async moveFilmsIntoDb(){       
         const dataStorage = path.resolve(__dirname, '..', '..', '..', 'data');    
         const files = fs.readdirSync(dataStorage);
-        const data = [];        
+        const filmData = [];        
 
         files.forEach(file => {
-            data.push(fs.readFileSync(`${dataStorage}\/${file}`, 'utf-8'));
+            filmData.push(fs.readFileSync(`${dataStorage}\/${file}`, 'utf-8'));
         });  
 
-        const filmsToProceed = data.length;           
+        const filmsToProceed = filmData.length;           
         for (let i = 0; i < filmsToProceed; i++){            
             try {
-                let parsedData = await JSON.parse(data[i]); 
+                let parsedData = await JSON.parse(filmData[i]); 
                 if (parsedData.name){     
                     if (!parsedData.alternativeName) {
                         parsedData.alternativeName = files[i].substring(0, files[i].length - 5);
@@ -46,7 +46,7 @@ export class TransferService {
         }  
                 
         console.log(files[0]);
-        return {message : 'success', filmsProcessed : data.length}
+        return {message : 'success', filmsProcessed : filmData.length}
     } 
 
     async addDataToDB(parsedData){  

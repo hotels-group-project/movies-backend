@@ -49,7 +49,7 @@ export class FilmService {
     }
 
     async updateFilm(updateFilmdDto) {
-        let filmToUpdate = await this.filmRepository.findOne({where : {film_id : updateFilmdDto.id}});
+        const filmToUpdate = await this.filmRepository.findOne({where : {film_id : updateFilmdDto.id}});
         for (let key in updateFilmdDto){
             filmToUpdate[key] = updateFilmdDto[key];
         }
@@ -65,7 +65,7 @@ export class FilmService {
     async getFilmsForPage(page : number) : Promise<GetFilmsForPage[]> {        
         const foundMovies = await this.filmRepository.findAll({include : {all : true}, offset: (page - 1) * this.filmsLimitInSearch, limit: this.filmsLimitInSearch});        
         const transformedData = this.transformDataForResponse(foundMovies);
-        let result: GetFilmsForPage[] = [];
+        const result: GetFilmsForPage[] = [];
 
         for (let i = 0; i < transformedData.length; i++){
             result.push( this.transformDataForPageMovie(transformedData[i]) );
@@ -155,7 +155,7 @@ export class FilmService {
         });
 
         const transformedData = this.transformDataForResponse(foundMovies);        
-        let result: GetFilmsForPage[] = [];
+        const result: GetFilmsForPage[] = [];
 
         for (let i = 0; i < transformedData.length; i++){
             result.push( this.transformDataForPageMovie(transformedData[i]) );
@@ -193,7 +193,7 @@ export class FilmService {
     }
 
     async getMainPage() {
-        let movies = {};
+        const movies = {};
         const moviesLimit = 20;
         movies['russian'] = await this.getFilmByFilter({
             include : [ {model : Person}, {model : Genre}, 
@@ -235,7 +235,7 @@ export class FilmService {
     }
 
     async getStartPage() {
-        let movies = {};
+        const movies = {};
         const moviesLimit = 15;
         movies['top10'] = await this.getFilmsSortedBy('kprating', 10);            
         
@@ -281,7 +281,7 @@ export class FilmService {
 
     getResponse(foundMovies) : GetFilmsForPage[]{
         const transformedData = this.transformDataForResponse(foundMovies);                
-        let result: GetFilmsForPage[] = [];
+        const result: GetFilmsForPage[] = [];
 
         for (let i = 0; i < transformedData.length; i++){
             result.push( this.transformDataForPageMovie(transformedData[i]) );
