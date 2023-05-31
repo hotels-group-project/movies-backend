@@ -8,7 +8,6 @@ import { GetFilmPage } from './interfaces/film/get-film-page.response';
 import { GetGenreResponse } from './interfaces/genre/get-genre.dto';
 import { GetMainPage } from './interfaces/film/get-main-page.response';
 import { AddFilmDto } from './interfaces/film/add-film.dto';
-import { setUncaughtExceptionCaptureCallback } from 'process';
 import { Roles } from './guards/role-auth.decorator';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { RolesGuard } from './guards/role.guard';

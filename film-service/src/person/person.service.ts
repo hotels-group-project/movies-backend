@@ -33,10 +33,10 @@ export class PersonService {
     }
 
     async getPersonById(id: number) : Promise<GetPersonByIdDto> {
-        const data = await this.personRepository.findOne({include : {all : true}, where: {person_id: id}});
-        const person = this.transformToGetPersonById(data);        
+        const personData = await this.personRepository.findOne({include : {all : true}, where: {person_id: id}});
+        const personDataForResponse = this.transformToGetPersonById(personData);  
 
-        return person;
+        return personDataForResponse;
     }
 
     async addPerson(addPersonDto: AddPersonDto){        
